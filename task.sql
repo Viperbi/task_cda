@@ -1,4 +1,4 @@
--- Création de la base de données
+-task- Création de la base de données
 CREATE DATABASE task CHARSET utf8mb4;
 USE task;
 
@@ -15,6 +15,7 @@ CREATE TABLE task(
 id_task INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 title VARCHAR(50) NOT NULL,
 content VARCHAR(250) NOT NULL,
+create_at DATETIME DEFAULT now() NOT NULL,
 `status` TINYINT(1) DEFAULT 0,
 id_account INT NOT NULL
 )ENGINE=InnoDB;
