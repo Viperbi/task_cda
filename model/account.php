@@ -73,6 +73,9 @@ function getAccountByEmail(PDO $bdd, string $email): ?array {
         $req->bindParam(1,$email, PDO::PARAM_STR);
         $req->execute();
         $data = $req->fetch(PDO::FETCH_ASSOC);
+        if (empty($data)) {
+            return null;
+        }
         return $data;
     } catch (Exception $e) {
         echo "Erreur : " . $e->getMessage();
