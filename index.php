@@ -1,11 +1,16 @@
 <?php
-
-include './vendor/autoload.php';
+session_start();
+//include './vendor/autoload.php';
 include './env.php';
 include './utils/connexion.php';
+include './utils/utils.php';
 
 include 'controller/categorieController.php';
 include 'controller/accountController.php';
 $bdd = connexion();
+
+include './vue/header.php';
 ajouterCategory($bdd);
-ajouterAccount($bdd);
+renderAccounts($bdd);
+include './vue/footer.php';
+
