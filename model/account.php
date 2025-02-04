@@ -65,17 +65,14 @@ function deleteAccount(PDO $bdd, string $email): void {
  * @param string $email
  * @return ?array acount [id, firstname, lastname, email]
  */
-function getAccountByEmail(PDO $bdd, string $email): ?array {
+function getAccountByEmail(PDO $bdd, string $email): array|null|string {
     try {
-        $requete = "SELECT id_account, firstname, lastname, email,`password` FROM account
+        $requete = "SELECT id_account, firstname, lastname, email, `password` FROM account
         WHERE email = ?";
         $req = $bdd->prepare($requete);
         $req->bindParam(1,$email, PDO::PARAM_STR);
         $req->execute();
         $data = $req->fetch(PDO::FETCH_ASSOC);
-        if (empty($data)) {
-            return null;
-        }
         return $data;
     } catch (Exception $e) {
         echo "Erreur : " . $e->getMessage();
@@ -87,7 +84,7 @@ function getAccountByEmail(PDO $bdd, string $email): ?array {
  * @param PDO $bdd
  * @return ?array acount [id, firstname, lastname, email]
  */
-function getAllAccount(PDO $bdd): ?array{
+function getAllAccount(PDO $bdd): array|null|string{
     try {
         $requete = "SELECT id_account, firstname, lastname, email FROM account";
         $req = $bdd->prepare($requete);

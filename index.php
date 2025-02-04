@@ -1,16 +1,47 @@
 <?php
+//Activer la session
 session_start();
+
+//Import des ressources communes
 //include './vendor/autoload.php';
 include './env.php';
 include './utils/connexion.php';
 include './utils/utils.php';
+include './controller/headerController.php';
 
-include 'controller/categorieController.php';
-include 'controller/accountController.php';
-$bdd = connexion();
+//Parse l'url entrée
+$url = parse_url($_SERVER['REQUEST_URI']);
 
-include './vue/header.php';
-ajouterCategory($bdd);
-renderAccounts($bdd);
+//Je récupère le path s'il y en a un, sinon je récupère la racine
+$path = isset($url['path']) ? $url['path'] : '/';
+
+//Je crée le ROUTER
+switch($path){
+    case '/task_cda/' :
+        include 'controller/categorieController.php';
+        include 'controller/accountController.php';
+        $bdd = connexion();
+        renderHeader();
+        ajouterCategory($bdd);
+        renderAccounts($bdd);
+        break;
+    
+    case '/task_cda/moncompte' :
+        include './controller/myAccountcontroller.php';
+        renderHeader();
+        renderMyAccount();
+        break ;
+    
+    case '/task_cda/deconnexion' :
+        include './controller/decoController.php';
+        break;
+    
+    default :
+        include './controller/errorController.php';
+        renderHeader();
+        renderError();
+
+}
+
 include './vue/footer.php';
 

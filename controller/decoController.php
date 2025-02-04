@@ -6,7 +6,7 @@ session_start();
 session_destroy();
 
 //Redirection vers l'accueil
-header('location:index.php');
+header('location:/task_cda/');
 exit;
 
 ?>
